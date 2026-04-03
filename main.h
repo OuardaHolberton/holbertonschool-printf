@@ -1,14 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <unistd.h>
 #include <stdarg.h>
-
-typedef struct fmt
-{
-    char spec;
-    int (*handler)(va_list);
-} fmt_t;
+#include <unistd.h>
 
 int _printf(const char *format, ...);
 int print_character(va_list args);
