@@ -1,6 +1,17 @@
 # _printf
 
+## 🔄 Flowchart
+
+The following flowchart explains the logic of `_printf` :
+
 ![flowchart](flowchart.png)
+
+The function reads the format string character by character.
+When it encounters `%` it reads the next character to identify
+the specifier and calls the corresponding handler function.
+Otherwise it writes the character directly to stdout.
+
+
 
 ## 📌 Description
 
