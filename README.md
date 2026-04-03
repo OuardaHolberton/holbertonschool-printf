@@ -1,4 +1,4 @@
-markdown# _printf
+# _printf
 
 ![flowchart](flowchart.png)
 
