@@ -11,12 +11,12 @@ int print_string(char *str)
 {
 	int i;
 
-	if (str == NULL)
+	if (str == NULL) /*verification que la chaine est null*/
 		str = "(null)";
 
 	i = 0;
 
-	while (str[i] != '\0')
+	while (str[i] != '\0')/* affiché chaque lettre de la chaine*/
 	{
 		write(1, &str[i], 1);
 		i++;
