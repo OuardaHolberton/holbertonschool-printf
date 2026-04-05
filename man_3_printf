@@ -2,8 +2,7 @@
 .SH NAME
 _printf \- custom implementation of printf
 .SH SYNOPSIS
-.B #include \(dqmain.h\(dq
-.br
+.B #include \(dqmain.h\(dq.br
 .B int _printf(const char *format, ...);
 .SH DESCRIPTION
 _printf writes output to stdout according to a format string.
@@ -15,14 +14,27 @@ The following conversion specifiers are supported:
 Prints a single character.
 .TP
 .B %s
-Prints a string. If the argument is NULL, prints (null).
+Prints a string. If the argument is NULL, prints "(null)".
+.TP
+.B %d, %i
+Prints a signed decimal integer.
 .TP
 .B %%
 Prints a literal percent sign.
 .SH RETURN VALUE
-Returns the number of characters printed, excluding the null byte.
-.br
-Returns \-1 if format is NULL.
+Returns the number of characters printed (excluding the null byte used to end output).
+
+Returns -1 if the format string is NULL.
+.SH EXAMPLES
+.RS
+_printf("Hello %s!\n", "World");
+_printf("Character: %c\n", 'A');
+_printf("Integer: %d, %i\n", 42, -42);
+_printf("Percent sign: %%\n");
+.RE
+.SH LIMITATIONS
+Only the following specifiers are supported: %c, %s, %d, %i, and %%.
+Flags, field width, precision, length modifiers, and other specifiers are not supported.
 .SH SEE ALSO
 printf(3)
 .SH BUGS

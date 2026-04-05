@@ -1,43 +1,62 @@
-#include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
+#include "main.h"
 
 /**
- * _printf - produces output according to a format
- * @format: format string
+ * _printf - imprime du texte selon un format spécifié
  *
- * Return: number of characters printed
+ * @format: chaîne de format contenant du texte et des spécificateurs
+ *
+ * Description: Cette fonction gère les spécificateurs suivants :
+ *  - %c : caractère
+ *  - %s : chaîne de caractères
+ *  - %d : entier signé
+ *  - %i : entier signé
+ *  - %% : caractère '%'
+ *
+ * Return: le nombre total de caractères affichés, -1 si format est NULL
  */
+
 int _printf(const char *format, ...)
 {
-	int i;
-	int count;
-	va_list args;
+	int i = 0;      /* Index pour parcourir la chaîne format */
+	int count = 0;  /* Compteur total de caractères affichés */
+	va_list args;   /* Liste des arguments variables */
 
-	i = 0;
-	count = 0;
+	/* Vérification de sécurité : format ne doit pas être NULL */
 	if (format == NULL)
 		return (-1);
+
+	/* Initialisation de la liste d'arguments */
 	va_start(args, format);
+
+	/* Parcours de chaque caractère de la chaîne format */
 	while (format[i])
 	{
+		/* Si on rencontre un '%' => c'est un spécificateur */
 		if (format[i] == '%')
 		{
-			if (format[i + 1] == 'c')
-				count += print_character(args);
-			else if (format[i + 1] == 's')
-				count += print_string(args);
-			else if (format[i + 1] == '%')
-				write(1, "%", 1);
-			i++;
+			i++;  /* Passer au caractère suivant pour identifier le type */
+			/* Gestion des différents spécificateurs */
+			if (format[i] == 'c') /* Caractère */
+				count += print_char(va_arg(args, int));
+			else if (format[i] == 's') /* Chaîne */
+				count += print_string(va_arg(args, char *));
+			else if (format[i] == 'd' || format[i] == 'i') /* Entier signé */
+				count += print_int(va_arg(args, int));
+			else if (format[i] == '%') /* Caractère '%' littéral */
+				count += write(1, "%", 1);
 		}
 		else
 		{
-			write(1, &format[i], 1);
-			count++;
+			/* Sinon, caractère normal : affichage direct */
+			count += write(1, &format[i], 1);
 		}
-		i++;
+		i++; /* Passer au caractère suivant */
 	}
+	/* Fin de la lecture des arguments variables */
 	va_end(args);
+
+	/* Retourner le nombre total de caractères affichés */
 	return (count);
 }

@@ -2,45 +2,45 @@
 #include <unistd.h>
 
 /**
- * print_number - prints an unsigned integer recursively
- * @n: number to print
+ * print_int - affiche un entier décimal
+ * @n: l'entier à afficher
  *
- * Return: number of characters printed
+ * Return: nombre de caractères affichés, ou -1 si write échoue
  */
-int print_number(unsigned int n)
+
+int print_int(int n)
 {
-	int count;
-	char digit;
+	int count = 0; /* Compteur de caractères affichés */
+	char c;
 
-	count = 0;
-	if (n / 10 != 0)
-		count += print_number(n / 10);
-	digit = (n % 10) + '0';
-	count += write(1, &digit, 1);
-	return (count);
-}
+	/* Cas spécial pour la valeur minimale d'un int */
+	if (n == -2147483648)
+		return (write(1, "-2147483648", 11));
 
-/**
- * print_int - prints a signed integer
- * @args: variadic argument list
- *
- * Return: number of characters printed
- */
-int print_int(va_list args)
-{
-	int n;
-	unsigned int num;
-	int count;
-
-	n = va_arg(args, int);
-	count = 0;
+	/* Si l'entier est négatif, afficher le signe '-' */
 	if (n < 0)
 	{
-		count += write(1, "-", 1);
-		num = (unsigned int)-n;
+		if (write(1, "-", 1) == -1)
+			return (-1);
+		count++;
+		n = -n; /* Rendre n positif pour l'affichage */
 	}
-	else
-		num = n;
-	count += print_number(num);
+
+	/* Affiche les chiffres de manière récursive */
+	if (n >= 10)
+	{
+		int temp = print_int(n / 10);
+
+		if (temp == -1)
+			return (-1);
+		count += temp;
+	}
+
+	/* Affiche le chiffre des unités */
+	c = (n % 10) + '0';
+	if (write(1, &c, 1) == -1)
+		return (-1);
+	count++;
+
 	return (count);
 }

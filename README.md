@@ -87,68 +87,96 @@ int main(void)
 }
 ```
 
-Output:
-```
-Hello Holberton!
-Character: A
-Percent sign: %
-```
+---
+
+## 🧩 Fonctionnalités implémentées
+
+| Spécificateur | Description                      |
+| ------------- | -------------------------------- |
+| `%c`          | Affiche un caractère             |
+| `%s`          | Affiche une chaîne de caractères |
+| `%%`          | Affiche le caractère `%`         |
+| `%d`          | Affiche un entier décimal        |
+| `%i`          | Affiche un entier décimal        |
+---
+
+## 🛠️ Fonctions principales
+
+* `_printf` : fonction principale qui parcourt la chaîne de format et gère les spécificateurs
+* `handle_format` : sélectionne la fonction appropriée selon le spécificateur
+* `print_char` : affiche un caractère
+* `print_string` : affiche une chaîne de caractères
+* `print_int` : affiche un entier (`%d` ou `%i`)
 
 ---
 
-## 🔄 How it works
+## 📂 Structure du projet
 
-1. `_printf` reads the format string character by character
-2. If the character is not `%` → it writes it directly with `write`
-3. If the character is `%` → it reads the next character (the specifier)
-4. It calls the corresponding handler function
-5. It returns the total number of characters printed
+```
+_printf/
+├── main.h            # Header file avec les prototypes et include guards
+├── _printf.c          # Fonction principale _printf
+├── handle_format.c    # Dispatch selon le spécificateur
+├── print_char.c       # Affichage d'un caractère
+├── print_string.c     # Affichage d'une chaîne de caractères
+├── print_int.c        # Affichage d'un entier (%d et %i)
+├── README.md              # Documentation du projet
+├── _printf.3              # Man page
+└── main.c                 # Fichier de test (facultatif, non rendu)
+```
 
 ---
 
 ## ⚠️ Limitations
 
-`_printf` does not handle:
-* Flag characters (`-`, `+`, `0`, ` `)
-* Field width
-* Precision
-* Length modifiers (`l`, `h`)
+* Ne gère pas :
+
+  * les flags
+  * la largeur (width)
+  * la précision
+  * les modificateurs de longueur
+
 
 ---
 
-## 📖 Man page
+## 🧪 Tests
 
-To read the manual page:
-```bash
-man ./man_3_printf
-```
+## 🧪 Exemple de test (main.c)
 
----
+Le fichier `main.c` peut être utilisé pour tester le comportement de la fonction `_printf` en la comparant à la fonction standard `printf`.
 
-## 🧪 Testing
+Il couvre plusieurs cas de test correspondant aux spécificateurs implémentés :
 
-To test `_printf` against the standard `printf`:
+* affichage de caractères (`%c`)
+* affichage de chaînes (`%s`)
+* affichage d'entiers (`%d` et `%i`)
+* affichage du caractère `%` (`%%`)
+* comparaison des longueurs retournées par `_printf` et `printf`
+
+
+Exemple de tests :
+
 ```c
-#include 
-#include "main.h"
-
-int main(void)
-{
-    int len1;
-    int len2;
-
-    len1 = _printf("Hello %s\n", "world");
-    len2 = printf("Hello %s\n", "world");
-    _printf("_printf returned: %d\n", len1);
-    printf("printf returned: %d\n", len2);
-    return (0);
-}
+_printf("Char: %c\n", 'A');
+_printf("String: %s\n", "Hello");
+_printf("Percent: %%\n");
+_printf("Int: %d\n", 42);
+_printf("Int: %i\n", -42);
+_printf("%s %c %% %d %i\n", "Test", 'X', 123, -456);
 ```
 
+Ce programme permet de vérifier que `_printf` produit la même sortie et retourne la même valeur que `printf`.
 
 ---
 
-## 👥 Authors
+## 👥 Auteurs
 
-* **Ouarda Bouchema**
-* **Rawan Safouan**
+* Nom OurdaHolerton
+* Nom rawan-holberton
+
+---
+
+## 📜 Licence
+
+Ce projet est réalisé dans le cadre du programme Holberton School.
+

@@ -3,10 +3,14 @@
 
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdlib.h>
 
+/* Prototype de la fonction _printf */
 int _printf(const char *format, ...);
-int print_character(va_list args);
-int print_string(va_list args);
-int print_decimal(va_list args);
 
-#endif
+/* Prototypes des fonctions d'affichage */
+int print_char(char c);
+int print_string(char *str);
+int print_int(int n);
+
+#endif /* MAIN_H */
