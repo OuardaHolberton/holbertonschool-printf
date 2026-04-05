@@ -11,7 +11,7 @@ When it encounters `%` it reads the next character to identify
 the specifier and calls the corresponding handler function.
 Otherwise it writes the character directly to stdout.
 
-
+---
 
 ## 📌 Description
 
@@ -25,7 +25,6 @@ This project aims to understand:
 * String parsing character by character
 * Variadic functions (`va_list`, `va_start`, `va_arg`, `va_end`)
 * Low-level output with `write` instead of `printf`
-* Function pointers and struct-based dispatch
 
 ---
 
@@ -58,6 +57,8 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c
 | `%c` | Prints a single character |
 | `%s` | Prints a string of characters |
 | `%%` | Prints a literal `%` sign |
+| `%d` | Prints a decimal integer |
+| `%i` | Prints an integer |
 
 ---
 
@@ -69,6 +70,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c
 | `_printf.c` | Main function — parses the format string |
 | `print_character.c` | Handles `%c` and `%%` |
 | `print_string.c` | Handles `%s` |
+| `print_int.c` | Handles `%d` and `%i` |
 | `man_3_printf` | Manual page for `_printf` |
 | `README.md` | Project documentation |
 
@@ -82,101 +84,61 @@ int main(void)
 {
     _printf("Hello %s!\n", "Holberton");
     _printf("Character: %c\n", 'A');
+    _printf("Integer: %d\n", 42);
     _printf("Percent sign: %%\n");
     return (0);
 }
 ```
 
----
-
-## 🧩 Fonctionnalités implémentées
-
-| Spécificateur | Description                      |
-| ------------- | -------------------------------- |
-| `%c`          | Affiche un caractère             |
-| `%s`          | Affiche une chaîne de caractères |
-| `%%`          | Affiche le caractère `%`         |
-| `%d`          | Affiche un entier décimal        |
-| `%i`          | Affiche un entier décimal        |
----
-
-## 🛠️ Fonctions principales
-
-* `_printf` : fonction principale qui parcourt la chaîne de format et gère les spécificateurs
-* `handle_format` : sélectionne la fonction appropriée selon le spécificateur
-* `print_char` : affiche un caractère
-* `print_string` : affiche une chaîne de caractères
-* `print_int` : affiche un entier (`%d` ou `%i`)
-
----
-
-## 📂 Structure du projet
-
+Output:
 ```
-_printf/
-├── main.h            # Header file avec les prototypes et include guards
-├── _printf.c          # Fonction principale _printf
-├── handle_format.c    # Dispatch selon le spécificateur
-├── print_char.c       # Affichage d'un caractère
-├── print_string.c     # Affichage d'une chaîne de caractères
-├── print_int.c        # Affichage d'un entier (%d et %i)
-├── README.md              # Documentation du projet
-├── _printf.3              # Man page
-└── main.c                 # Fichier de test (facultatif, non rendu)
+Hello Holberton!
+Character: A
+Integer: 42
+Percent sign: %
 ```
+
+---
+
+## 🔄 How it works
+
+1. `_printf` reads the format string character by character
+2. If the character is not `%` → writes it directly with `write`
+3. If the character is `%` → reads the next character (the specifier)
+4. Calls the corresponding handler function
+5. Returns the total number of characters printed
 
 ---
 
 ## ⚠️ Limitations
 
-* Ne gère pas :
-
-  * les flags
-  * la largeur (width)
-  * la précision
-  * les modificateurs de longueur
-
+`_printf` does not handle:
+* Flag characters (`-`, `+`, `0`, ` `)
+* Field width
+* Precision
+* Length modifiers (`l`, `h`)
 
 ---
 
-## 🧪 Tests
+## 📖 Man page
+```bash
+man ./man_3_printf
+```
 
-## 🧪 Exemple de test (main.c)
+---
 
-Le fichier `main.c` peut être utilisé pour tester le comportement de la fonction `_printf` en la comparant à la fonction standard `printf`.
-
-Il couvre plusieurs cas de test correspondant aux spécificateurs implémentés :
-
-* affichage de caractères (`%c`)
-* affichage de chaînes (`%s`)
-* affichage d'entiers (`%d` et `%i`)
-* affichage du caractère `%` (`%%`)
-* comparaison des longueurs retournées par `_printf` et `printf`
-
-
-Exemple de tests :
-
+## 🧪 Testing
 ```c
 _printf("Char: %c\n", 'A');
 _printf("String: %s\n", "Hello");
 _printf("Percent: %%\n");
 _printf("Int: %d\n", 42);
 _printf("Int: %i\n", -42);
-_printf("%s %c %% %d %i\n", "Test", 'X', 123, -456);
 ```
 
-Ce programme permet de vérifier que `_printf` produit la même sortie et retourne la même valeur que `printf`.
-
 ---
 
-## 👥 Auteurs
+## 👥 Authors
 
-* Nom OurdaHolerton
-* Nom rawan-holberton
-
----
-
-## 📜 Licence
-
-Ce projet est réalisé dans le cadre du programme Holberton School.
-
+* Ouarda Bouchema
+* Rawan Safouan
