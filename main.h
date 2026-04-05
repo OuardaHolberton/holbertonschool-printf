@@ -11,5 +11,6 @@ int _printf(const char *format, ...);
 /* Prototypes des fonctions d'affichage */
 int print_char(char c);
 int print_string(char *str);
+int print_int(int n);
 
 #endif /* MAIN_H */
