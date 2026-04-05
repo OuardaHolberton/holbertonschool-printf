@@ -1,0 +1,46 @@
+.TH _PRINTF 3 "April 2026" "Holberton School" "User Manual"
+.SH NAME
+_printf \- custom implementation of printf
+.SH SYNOPSIS
+.B #include "main.h"
+.br
+.B int _printf(const char *format, ...);
+.SH DESCRIPTION
+_printf writes output to the standard output (stdout) according to a format string.
+
+The format string may contain ordinary characters, which are printed as is, 
+and format specifiers, which are replaced by the values of additional arguments.
+.PP
+The following conversion specifiers are supported:
+.TP
+.B %c
+Prints a single character.
+.TP
+.B %s
+Prints a string. If the argument is NULL, prints "(null)".
+.TP
+.B %d, %i
+Prints a signed decimal integer.
+.TP
+.B %%
+Prints a literal percent sign.
+.SH RETURN VALUE
+Returns the number of characters printed (excluding the null byte used to end output).
+
+Returns -1 if the format string is NULL.
+.SH EXAMPLES
+.RS
+_printf("Hello %s!\n", "World");
+_printf("Character: %c\n", 'A');
+_printf("Integer: %d, %i\n", 42, -42);
+_printf("Percent sign: %%\n");
+.RE
+.SH LIMITATIONS
+Only the following specifiers are supported: %c, %s, %d, %i, and %%.
+Flags, field width, precision, length modifiers, and other specifiers are not supported.
+.SH SEE ALSO
+printf(3)
+.SH BUGS
+No known bugs.
+.SH AUTHORS
+Ouarda Bouchema and Rawan Safouan
