@@ -9,18 +9,22 @@
  */
 int print_string(char *str)
 {
-	int i;
+	int i = 0;
 
-	if (str == NULL) /*verification que la chaine est null*/
+	/* Vérifie si la chaîne est NULL et remplace par "(null)" */
+	if (str == NULL)
 		str = "(null)";
 
-	i = 0;
+	/* Parcourt chaque caractère de la chaîne */
 
-	while (str[i] != '\0')/* affiché chaque lettre de la chaine*/
+	while (str[i] != '\0')
 	{
-		write(1, &str[i], 1);
+		/* Écrit le caractère courant et vérifie si write échoue */
+		if (write(1, &str[i], 1) == -1)
+			return (-1);
+
+		/* Passe au caractère suivant */
 		i++;
 	}
-
 	return (i);
 }
