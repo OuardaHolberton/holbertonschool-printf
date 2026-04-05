@@ -127,16 +127,7 @@ man ./man_3_printf
 
 ---
 
-## 🧪 Testing
-```c
-_printf("Char: %c\n", 'A');
-_printf("String: %s\n", "Hello");
-_printf("Percent: %%\n");
-_printf("Int: %d\n", 42);
-_printf("Int: %i\n", -42);
-```
 
----
 
 ## 👥 Authors
 
