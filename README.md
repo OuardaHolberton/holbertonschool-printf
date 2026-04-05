@@ -62,25 +62,33 @@ int main(void)
 | `%c`          | Affiche un caractère             |
 | `%s`          | Affiche une chaîne de caractères |
 | `%%`          | Affiche le caractère `%`         |
-
+| `%d`          | Affiche un entier décimal        |
+| `%i`          | Affiche un entier décimal        |
 ---
 
 ## 🛠️ Fonctions principales
 
-* `_printf` : fonction principale
+* `_printf` : fonction principale qui parcourt la chaîne de format et gère les spécificateurs
+* `handle_format` : sélectionne la fonction appropriée selon le spécificateur
 * `print_char` : affiche un caractère
-* `print_string` : affiche une chaîne
+* `print_string` : affiche une chaîne de caractères
+* `print_int` : affiche un entier (`%d` ou `%i`)
 
 ---
 
 ## 📂 Structure du projet
 
 ```
-.
-├── main.h
-├── _printf.c
-├── print_char.c
-├── print_string.c
+_printf/
+├── main.h            # Header file avec les prototypes et include guards
+├── _printf.c          # Fonction principale _printf
+├── handle_format.c    # Dispatch selon le spécificateur
+├── print_char.c       # Affichage d'un caractère
+├── print_string.c     # Affichage d'une chaîne de caractères
+├── print_int.c        # Affichage d'un entier (%d et %i)
+├── README.md              # Documentation du projet
+├── _printf.3              # Man page
+└── main.c                 # Fichier de test (facultatif, non rendu)
 ```
 
 ---
@@ -93,7 +101,7 @@ int main(void)
   * la largeur (width)
   * la précision
   * les modificateurs de longueur
-* Ne gère que `%c`, `%s` et `%%`
+
 
 ---
 
@@ -101,35 +109,26 @@ int main(void)
 
 ## 🧪 Exemple de test (main.c)
 
-Le fichier `main.c` (non inclus dans le repository final, mais peut être present afin que l'equipe puisse verifier le code) est utilisé pour tester le comportement de la fonction `_printf` en le comparant à la fonction standard `printf`.
+Le fichier `main.c` peut être utilisé pour tester le comportement de la fonction `_printf` en la comparant à la fonction standard `printf`.
 
-Il couvre plusieurs cas de test, notamment :
+Il couvre plusieurs cas de test correspondant aux spécificateurs implémentés :
 
-* affichage de chaînes simples
-* comparaison des longueurs retournées
-* gestion des entiers (`%d`, `%i`)
-* gestion des entiers non signés (`%u`)
-* affichage en octal (`%o`)
-* affichage en hexadécimal (`%x`, `%X`)
 * affichage de caractères (`%c`)
 * affichage de chaînes (`%s`)
+* affichage d'entiers (`%d` et `%i`)
+* affichage du caractère `%` (`%%`)
+* comparaison des longueurs retournées par `_printf` et `printf`
 
-Exemple :
+
+Exemple de tests :
 
 ```c
-int main(void)
-{
-    int len;
-    int len2;
-
-    len = _printf("Hello %s\n", "world");
-    len2 = printf("Hello %s\n", "world");
-
-    _printf("Length: %d\n", len);
-    printf("Length: %d\n", len2);
-
-    return (0);
-}
+_printf("Char: %c\n", 'A');
+_printf("String: %s\n", "Hello");
+_printf("Percent: %%\n");
+_printf("Int: %d\n", 42);
+_printf("Int: %i\n", -42);
+_printf("%s %c %% %d %i\n", "Test", 'X', 123, -456);
 ```
 
 Ce programme permet de vérifier que `_printf` produit la même sortie et retourne la même valeur que `printf`.
