@@ -1,54 +1,88 @@
 # _printf
 
+## 🔄 Flowchart
+
+The following flowchart explains the logic of `_printf` :
+
+![flowchart](flowchart.png)
+
+The function reads the format string character by character.
+When it encounters `%` it reads the next character to identify
+the specifier and calls the corresponding handler function.
+Otherwise it writes the character directly to stdout.
+
+
+
 ## 📌 Description
 
-`_printf` est une réimplémentation simplifiée de la fonction standard `printf` du langage C.
+`_printf` is a custom reimplementation of the standard C `printf` function,
+developed as part of the Holberton School curriculum.
 
-Cette fonction produit une sortie formatée vers la sortie standard (`stdout`) en interprétant une chaîne de format contenant différents spécificateurs.
+It produces formatted output to stdout by parsing a format string
+and handling specific conversion specifiers using variadic functions.
 
-Ce projet a pour objectif de comprendre :
-
-* le parsing de chaînes
-* les fonctions variadiques (`va_list`, `va_start`, `va_arg`, `va_end`)
-* la gestion de la mémoire et de l'affichage bas niveau avec `write`
+This project aims to understand:
+* String parsing character by character
+* Variadic functions (`va_list`, `va_start`, `va_arg`, `va_end`)
+* Low-level output with `write` instead of `printf`
+* Function pointers and struct-based dispatch
 
 ---
 
 ## ⚙️ Prototype
-
 ```c
 int _printf(const char *format, ...);
 ```
 
 ---
 
-## 📥 Compilation
+## 🛠️ Requirements
 
+* Ubuntu 20.04 LTS
+* gcc compiler
+* Betty coding style compliant
+
+---
+
+## 📥 Compilation
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c
 ```
 
 ---
 
-## 🚀 Utilisation
+## 🧩 Supported specifiers
 
-Exemple simple :
+| Specifier | Description |
+|-----------|-------------|
+| `%c` | Prints a single character |
+| `%s` | Prints a string of characters |
+| `%%` | Prints a literal `%` sign |
 
+---
+
+## 📂 File structure
+
+| File | Description |
+|------|-------------|
+| `main.h` | Header file — prototypes and includes |
+| `_printf.c` | Main function — parses the format string |
+| `print_character.c` | Handles `%c` and `%%` |
+| `print_string.c` | Handles `%s` |
+| `man_3_printf` | Manual page for `_printf` |
+| `README.md` | Project documentation |
+
+---
+
+## 🚀 Usage example
 ```c
 #include "main.h"
-/**
- * main - Entry point for testing _printf
- *
- * Description:
- * This function tests the _printf function by printing a simple
- * string with a %s specifier. It demonstrates how _printf
- * handles string formatting and returns the number of characters printed.
- *
- * Return: Always 0.
- */
+
 int main(void)
 {
-    _printf("Hello %s!\n", "world");
+    _printf("Hello %s!\n", "Holberton");
+    _printf("Character: %c\n", 'A');
+    _printf("Percent sign: %%\n");
     return (0);
 }
 ```
